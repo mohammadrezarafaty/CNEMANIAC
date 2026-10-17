@@ -309,10 +309,6 @@
         <button id="tabBtnForm" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow-sm">
           فرم ثبت‌نام
         </button>
-        <button id="tabBtnAdmin" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-800 flex items-center gap-1.5">
-          <span>تنظیمات و لیست ثبت‌نام‌ها</span>
-          <span id="subCountBadge" class="px-1.5 py-0.5 text-[11px] rounded-full bg-amber-500/20 text-amber-300 font-bold">0</span>
-        </button>
       </div>
     </div>
   </header>
@@ -653,155 +649,6 @@
       </div>
     </section>
 
-    <!-- VIEW 2: ADMIN SETTINGS & SUBMISSIONS PANEL -->
-    <section id="viewAdmin" class="hidden space-y-8">
-      <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 sm:p-8 space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800 pb-4">
-          <div>
-            <h2 class="text-xl font-bold text-white">تنظیمات وبینار و اتصال به درگاه دریافت اطلاعات</h2>
-            <p class="text-xs text-zinc-400 mt-1">
-              اطلاعات زمان برگزاری، شماره کارت و محل دریافت فرم‌ها (ربات تلگرام یا گوگل شیت) را در این بخش تنظیم کنید.
-            </p>
-          </div>
-          <button
-            type="button"
-            id="backToFormBtn"
-            class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition"
-          >
-            بازگشت به فرم ثبت‌نام
-          </button>
-        </div>
-
-        <form id="adminConfigForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="space-y-1.5">
-            <label for="cfgDate" class="block text-xs font-semibold text-zinc-300">تاریخ برگزاری وبینار</label>
-            <input
-              type="text"
-              id="cfgDate"
-              placeholder="مثال: جمعه ۲۵ آبان ۱۴۰۵"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div class="space-y-1.5">
-            <label for="cfgTime" class="block text-xs font-semibold text-zinc-300">ساعت برگزاری وبینار</label>
-            <input
-              type="text"
-              id="cfgTime"
-              placeholder="مثال: ساعت ۱۸:۰۰ تا ۲۱:۰۰ به وقت تهران"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div class="space-y-1.5">
-            <label for="cfgIranCard" class="block text-xs font-semibold text-zinc-300">شماره کارت بانکی (بانک ملت - محمد رضا رفعتی)</label>
-            <input
-              type="text"
-              id="cfgIranCard"
-              placeholder="6104-3376-5301-3472"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 ltr-input focus:outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div class="space-y-1.5">
-            <label for="cfgIranSheba" class="block text-xs font-semibold text-zinc-300">شماره شبا (بانک ملت - محمد رضا رفعتی)</label>
-            <input
-              type="text"
-              id="cfgIranSheba"
-              placeholder="IR460120020000003363331651"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 ltr-input focus:outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div class="md:col-span-2 space-y-1.5">
-            <label for="cfgIntlPay" class="block text-xs font-semibold text-zinc-300">آدرس ولت USDT (فقط شبکه BEP20 - ۵ دلار)</label>
-            <input
-              type="text"
-              id="cfgIntlPay"
-              placeholder="0xd80AF62B35b3EF877b39edc0CEB6B95e173Ad8F3"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 ltr-input focus:outline-none focus:border-amber-500"
-            />
-          </div>
-
-          <div class="md:col-span-2 space-y-1.5 pt-2 border-t border-zinc-800">
-            <label for="cfgWebhookUrl" class="block text-xs font-semibold text-amber-300">
-              آدرس وب‌هوک Google Apps Script (اختیاری - جهت ذخیره خودکار فرم و عکس فیش در گوگل درایو و گوگل شیت شما)
-            </label>
-            <input
-              type="url"
-              id="cfgWebhookUrl"
-              placeholder="https://script.google.com/macros/s/.../exec"
-              class="w-full rounded-xl bg-zinc-950 border border-zinc-700 px-3.5 py-2.5 text-sm text-zinc-100 ltr-input focus:outline-none focus:border-amber-500"
-            />
-            <p class="text-[11px] text-zinc-400">
-              اگر روی گیت‌هاب یا کلودفلر آپلود می‌کنید، با قرار دادن لینک رایگان Google Apps Script، تمام ثبت‌نام‌ها و تصویر فیش‌ها مستقیماً در گوگل شیت و گوگل درایو شما ذخیره می‌شوند.
-            </p>
-          </div>
-
-          <div class="md:col-span-2 flex flex-wrap items-center gap-3 pt-2">
-            <button
-              type="submit"
-              class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-sm transition"
-            >
-              ذخیره و اعمال در فرم
-            </button>
-            <button
-              type="button"
-              id="downloadHtmlBtn"
-              class="px-5 py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 font-semibold text-sm transition"
-            >
-              📥 دانلود فایل HTML نهایی (آماده آپلود در گیت‌هاب)
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Submitted Registrations Table -->
-      <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 sm:p-8 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 class="text-lg font-bold text-white">لیست ثبت‌نام‌های ثبت‌شده در این مرورگر</h3>
-            <p class="text-xs text-zinc-400">می‌توانید ثبت‌نام‌های آزمایشی را بررسی کرده یا خروجی اکسل (CSV) بگیرید</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button
-              type="button"
-              id="exportCsvBtn"
-              class="px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-zinc-700 transition"
-            >
-              خروجی CSV (اکسل)
-            </button>
-            <button
-              type="button"
-              id="clearSubsBtn"
-              class="px-3.5 py-2 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-300 text-xs font-semibold border border-red-500/30 transition"
-            >
-              پاک کردن لیست
-            </button>
-          </div>
-        </div>
-
-        <div id="submissionsContainer" class="overflow-x-auto">
-          <div id="emptySubmissionsMsg" class="text-center py-8 text-sm text-zinc-500">
-            هنوز هیچ ثبت‌نامی ثبت نشده است.
-          </div>
-          <table id="submissionsTable" class="hidden w-full text-right text-xs sm:text-sm border-collapse">
-            <thead>
-              <tr class="border-b border-zinc-800 text-zinc-400">
-                <th class="py-3 px-3">نام شرکت‌کننده</th>
-                <th class="py-3 px-3">تعرفه</th>
-                <th class="py-3 px-3">آیدی تلگرام</th>
-                <th class="py-3 px-3">جیمیل</th>
-                <th class="py-3 px-3">فیش واریزی</th>
-                <th class="py-3 px-3">زمان ثبت</th>
-              </tr>
-            </thead>
-            <tbody id="submissionsTbody" class="divide-y divide-zinc-800/70"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- Confirmation Modal -->
@@ -855,36 +702,21 @@
         webhookUrl: 'https://script.google.com/macros/s/AKfycbxgw5J5-N-LJAhPZCc9P-ZsndXYYc-N9rePzCwmlxUewzscoEktLjcLShAqhPO9nm01ew/exec'
       };
 
-      var submissions = [];
       var currentReceiptDataUrl = '';
       var currentReceiptName = '';
       var currentReceiptSize = '';
       var lastSubmittedRecord = null;
 
-      // Safe localStorage load
+      // Clear data left in visitors' browsers by the old admin panel
       try {
-        var savedCfg = localStorage.getItem('cinemaniac_webinar_cfg');
-        if (savedCfg) {
-          var parsedCfg = JSON.parse(savedCfg);
-          if (parsedCfg.iranCard === '---- ---- ---- ----') delete parsedCfg.iranCard;
-          if (parsedCfg.intlPay === 'PayPal / USDT (پس از هماهنگی در تلگرام)' || parsedCfg.intlPay === 'PayPal / USDT') delete parsedCfg.intlPay;
-          config = Object.assign(config, parsedCfg);
-        }
-        var savedSubs = localStorage.getItem('cinemaniac_webinar_subs');
-        if (savedSubs) {
-          submissions = JSON.parse(savedSubs) || [];
-        }
+        localStorage.removeItem('cinemaniac_webinar_cfg');
+        localStorage.removeItem('cinemaniac_webinar_subs');
       } catch (e) {
         // Ignore storage restrictions in sandboxed environments
       }
 
       // DOM Elements
       var tabBtnForm = document.getElementById('tabBtnForm');
-      var tabBtnAdmin = document.getElementById('tabBtnAdmin');
-      var backToFormBtn = document.getElementById('backToFormBtn');
-      var viewRegistration = document.getElementById('viewRegistration');
-      var viewAdmin = document.getElementById('viewAdmin');
-      var subCountBadge = document.getElementById('subCountBadge');
 
       var displayDate = document.getElementById('displayDate');
       var displayTime = document.getElementById('displayTime');
@@ -918,21 +750,6 @@
       var errGmail = document.getElementById('errGmail');
       var errReceipt = document.getElementById('errReceipt');
       var submitRegistrationBtn = document.getElementById('submitRegistrationBtn');
-
-      var adminConfigForm = document.getElementById('adminConfigForm');
-      var cfgDate = document.getElementById('cfgDate');
-      var cfgTime = document.getElementById('cfgTime');
-      var cfgIranCard = document.getElementById('cfgIranCard');
-      var cfgIranSheba = document.getElementById('cfgIranSheba');
-      var cfgIntlPay = document.getElementById('cfgIntlPay');
-      var cfgWebhookUrl = document.getElementById('cfgWebhookUrl');
-      var downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
-
-      var exportCsvBtn = document.getElementById('exportCsvBtn');
-      var clearSubsBtn = document.getElementById('clearSubsBtn');
-      var emptySubmissionsMsg = document.getElementById('emptySubmissionsMsg');
-      var submissionsTable = document.getElementById('submissionsTable');
-      var submissionsTbody = document.getElementById('submissionsTbody');
 
       var successModal = document.getElementById('successModal');
       var modalSummaryBox = document.getElementById('modalSummaryBox');
@@ -987,94 +804,11 @@
           displayIranSheba.textContent = config.iranSheba || 'IR460120020000003363331651';
         }
         displayIntlPayment.textContent = config.intlPay || '0xd80AF62B35b3EF877b39edc0CEB6B95e173Ad8F3';
-
-        cfgDate.value = config.date === 'به‌زودی اعلام می‌شود' ? '' : config.date;
-        cfgTime.value = config.time === 'به‌زودی اعلام می‌شود' ? '' : config.time;
-        cfgIranCard.value = config.iranCard || '6104-3376-5301-3472';
-        if (cfgIranSheba) {
-          cfgIranSheba.value = config.iranSheba || 'IR460120020000003363331651';
-        }
-        cfgIntlPay.value = config.intlPay || '0xd80AF62B35b3EF877b39edc0CEB6B95e173Ad8F3';
-        cfgWebhookUrl.value = config.webhookUrl || '';
       }
 
-      function renderSubmissionsTable() {
-        subCountBadge.textContent = String(submissions.length);
-        if (submissions.length === 0) {
-          emptySubmissionsMsg.classList.remove('hidden');
-          submissionsTable.classList.add('hidden');
-          submissionsTbody.innerHTML = '';
-          return;
-        }
-        emptySubmissionsMsg.classList.add('hidden');
-        submissionsTable.classList.remove('hidden');
-        submissionsTbody.innerHTML = '';
-
-        submissions.forEach(function (item) {
-          var tr = document.createElement('tr');
-          tr.className = 'hover:bg-zinc-800/40 transition';
-
-          var tdName = document.createElement('td');
-          tdName.className = 'py-3 px-3 font-semibold text-zinc-100';
-          tdName.textContent = item.fullName;
-
-          var tdPlan = document.createElement('td');
-          tdPlan.className = 'py-3 px-3';
-          tdPlan.innerHTML = item.regionPlan === 'iran_500k'
-            ? '<span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 text-xs">داخل ایران (۵۰۰ هزار تومان)</span>'
-            : '<span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 text-xs">خارج از ایران ($5)</span>';
-
-          var tdTg = document.createElement('td');
-          tdTg.className = 'py-3 px-3 font-mono text-xs text-zinc-300 dir-ltr';
-          tdTg.textContent = item.telegramId;
-
-          var tdGmail = document.createElement('td');
-          tdGmail.className = 'py-3 px-3 font-mono text-xs text-zinc-300 dir-ltr';
-          tdGmail.textContent = item.gmailAddress;
-
-          var tdReceipt = document.createElement('td');
-          tdReceipt.className = 'py-3 px-3';
-          if (item.receiptDataUrl) {
-            var img = document.createElement('img');
-            img.src = item.receiptDataUrl;
-            img.alt = 'فیش';
-            img.className = 'w-10 h-10 object-cover rounded-lg border border-zinc-700';
-            tdReceipt.appendChild(img);
-          } else {
-            tdReceipt.textContent = item.receiptName || 'ثبت شده';
-          }
-
-          var tdTime = document.createElement('td');
-          tdTime.className = 'py-3 px-3 text-xs text-zinc-400';
-          tdTime.textContent = item.submittedAt;
-
-          tr.appendChild(tdName);
-          tr.appendChild(tdPlan);
-          tr.appendChild(tdTg);
-          tr.appendChild(tdGmail);
-          tr.appendChild(tdReceipt);
-          tr.appendChild(tdTime);
-          submissionsTbody.appendChild(tr);
-        });
-      }
-
-      function switchView(view) {
-        if (view === 'admin') {
-          viewRegistration.classList.add('hidden');
-          viewAdmin.classList.remove('hidden');
-          tabBtnAdmin.className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow-sm flex items-center gap-1.5';
-          tabBtnForm.className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-800';
-        } else {
-          viewAdmin.classList.add('hidden');
-          viewRegistration.classList.remove('hidden');
-          tabBtnForm.className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow-sm';
-          tabBtnAdmin.className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-800 flex items-center gap-1.5';
-        }
-      }
-
-      tabBtnForm.addEventListener('click', function () { switchView('form'); });
-      tabBtnAdmin.addEventListener('click', function () { switchView('admin'); });
-      backToFormBtn.addEventListener('click', function () { switchView('form'); });
+      tabBtnForm.addEventListener('click', function () {
+        registrationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
 
       // Sync Pricing Cards with Radio Buttons
       function selectPlanUI(planValue) {
@@ -1255,16 +989,6 @@
         };
 
         lastSubmittedRecord = record;
-        submissions.unshift(record);
-
-        try {
-          localStorage.setItem('cinemaniac_webinar_subs', JSON.stringify(submissions));
-        } catch (err) {
-          // If quota exceeded due to large base64 image, store without full image
-        }
-
-        renderSubmissionsTable();
-
         // Optional Webhook Send if configured
         if (config.webhookUrl && config.webhookUrl.startsWith('http')) {
           submitRegistrationBtn.disabled = true;
@@ -1344,83 +1068,8 @@
       });
 
       // Admin Config Save
-      adminConfigForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        config.date = cfgDate.value.trim() || 'به‌زودی اعلام می‌شود';
-        config.time = cfgTime.value.trim() || 'به‌زودی اعلام می‌شود';
-        config.iranCard = cfgIranCard.value.trim() || '6104-3376-5301-3472';
-        if (cfgIranSheba) {
-          config.iranSheba = cfgIranSheba.value.trim() || 'IR460120020000003363331651';
-        }
-        config.intlPay = cfgIntlPay.value.trim() || '0xd80AF62B35b3EF877b39edc0CEB6B95e173Ad8F3';
-        config.webhookUrl = cfgWebhookUrl.value.trim();
-
-        try {
-          localStorage.setItem('cinemaniac_webinar_cfg', JSON.stringify(config));
-        } catch (err) {}
-
-        renderConfigToUI();
-        showToast('تنظیمات وبینار با موفقیت بروزرسانی شد!');
-      });
-
-      // Download Updated Standalone HTML
-      downloadHtmlBtn.addEventListener('click', function () {
-        renderConfigToUI();
-        var htmlSource = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-        var blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'index.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('فایل index.html آماده آپلود در گیت‌هاب دانلود شد!');
-      });
-
-      // Export CSV
-      exportCsvBtn.addEventListener('click', function () {
-        if (submissions.length === 0) {
-          showToast('لیست ثبت‌نام‌ها خالی است.');
-          return;
-        }
-        var headers = ['کد پیگیری', 'نام و نام خانوادگی', 'تعرفه', 'آیدی تلگرام', 'جیمیل', 'نام فایل فیش', 'زمان ثبت'];
-        var rows = submissions.map(function (s) {
-          return [
-            s.id,
-            '"' + (s.fullName || '').replace(/"/g, '""') + '"',
-            '"' + (s.amountLabel || '') + '"',
-            s.telegramId,
-            s.gmailAddress,
-            '"' + (s.receiptName || '') + '"',
-            '"' + (s.submittedAt || '') + '"'
-          ].join(',');
-        });
-        var csvContent = '\uFEFF' + headers.join(',') + '\n' + rows.join('\n');
-        var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'cinemaniac-registrations.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-
-      clearSubsBtn.addEventListener('click', function () {
-        submissions = [];
-        try {
-          localStorage.removeItem('cinemaniac_webinar_subs');
-        } catch (err) {}
-        renderSubmissionsTable();
-        showToast('لیست ثبت‌نام‌های آزمایشی پاک شد.');
-      });
-
       // Initialize UI
       renderConfigToUI();
-      renderSubmissionsTable();
     })();
   </script>
 
