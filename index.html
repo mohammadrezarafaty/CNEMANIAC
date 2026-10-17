@@ -616,7 +616,7 @@
                     برای انتخاب عکس فیش واریزی کلیک کنید یا تصویر را اینجا رها کنید
                   </div>
                   <p class="text-xs text-zinc-400">
-                    فرمت‌های مجاز: JPG, PNG, WEBP (حداکثر حجم ۵ مگابایت)
+                    فرمت‌های مجاز: JPG, PNG, WEBP (حداکثر حجم ۱۵ مگابایت)
                   </p>
                 </div>
 
@@ -880,26 +880,57 @@
           showToast('لطفاً فقط فایل تصویری (عکس فیش) انتخاب کنید.');
           return;
         }
-        if (file.size > 5 * 1024 * 1024) {
-          showToast('حجم تصویر نباید بیشتر از ۵ مگابایت باشد.');
+        if (file.size > 15 * 1024 * 1024) {
+          showToast('حجم تصویر نباید بیشتر از ۱۵ مگابایت باشد.');
           return;
         }
 
         currentReceiptName = file.name;
-        var sizeKB = Math.round(file.size / 1024);
-        currentReceiptSize = sizeKB > 1024 ? (sizeKB / 1024).toFixed(1) + ' MB' : sizeKB + ' KB';
 
         var reader = new FileReader();
         reader.onload = function (evt) {
-          currentReceiptDataUrl = evt.target.result;
-          receiptPreviewImg.src = currentReceiptDataUrl;
-          receiptFileName.textContent = currentReceiptName;
-          receiptFileSize.textContent = '(' + currentReceiptSize + ')';
-          uploadEmptyState.classList.add('hidden');
-          uploadPreviewState.classList.remove('hidden');
-          errReceipt.classList.add('hidden');
+          shrinkReceipt(evt.target.result, file.size, function (dataUrl) {
+            currentReceiptDataUrl = dataUrl;
+            // base64 is ~4/3 of the bytes it encodes
+            var sizeKB = Math.round((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75 / 1024);
+            currentReceiptSize = sizeKB > 1024 ? (sizeKB / 1024).toFixed(1) + ' MB' : sizeKB + ' KB';
+            receiptPreviewImg.src = currentReceiptDataUrl;
+            receiptFileName.textContent = currentReceiptName;
+            receiptFileSize.textContent = '(' + currentReceiptSize + ')';
+            uploadEmptyState.classList.add('hidden');
+            uploadPreviewState.classList.remove('hidden');
+            errReceipt.classList.add('hidden');
+          });
         };
         reader.readAsDataURL(file);
+      }
+
+      // Phone photos are several MB; a receipt stays readable at 1600px JPEG,
+      // which keeps the upload to a few hundred KB on slow connections.
+      function shrinkReceipt(dataUrl, originalBytes, done) {
+        var MAX_SIDE = 1600;
+        var img = new Image();
+        img.onload = function () {
+          var scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+          if (scale === 1 && originalBytes < 400 * 1024) {
+            done(dataUrl);
+            return;
+          }
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          var smaller = canvas.toDataURL('image/jpeg', 0.82);
+          done(smaller.length < dataUrl.length ? smaller : dataUrl);
+        };
+        img.onerror = function () {
+          // Formats the browser cannot decode (e.g. some HEIC) are sent as-is
+          done(dataUrl);
+        };
+        img.src = dataUrl;
       }
 
       dropzoneArea.addEventListener('click', function (e) {
@@ -1005,7 +1036,7 @@
         // Optional Webhook Send if configured
         if (config.webhookUrl && config.webhookUrl.startsWith('http')) {
           submitRegistrationBtn.disabled = true;
-          submitRegistrationBtn.textContent = 'در حال ارسال اطلاعات...';
+          submitRegistrationBtn.textContent = 'در حال ارسال اطلاعات... لطفاً صفحه را نبندید';
           fetch(config.webhookUrl, {
             method: 'POST',
             mode: 'no-cors',
