@@ -598,7 +598,7 @@
         iranCard: '6104-3376-5301-3472',
         iranSheba: 'IR460120020000003363331651',
         intlPay: '0xd80AF62B35b3EF877b39edc0CEB6B95e173Ad8F3',
-        webhookUrl: ''
+        webhookUrl: 'https://script.google.com/macros/s/AKfycbxgw5J5-N-LJAhPZCc9P-ZsndXYYc-N9rePzCwmlxUewzscoEktLjcLShAqhPO9nm01ew/exec'
       };
 
       var submissions = [];
@@ -1018,25 +1018,31 @@
           fetch(config.webhookUrl, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(record)
+          }).then(function () {
+            resetRegistrationForm();
+            openConfirmationModal(record);
+          }).catch(function () {
+            showToast('ارسال اطلاعات ناموفق بود. لطفاً اتصال اینترنت را بررسی و دوباره تلاش کنید.');
           }).finally(function () {
             submitRegistrationBtn.disabled = false;
             submitRegistrationBtn.innerHTML = '<span>ثبت نهایی اطلاعات و ارسال فیش واریزی</span><span>←</span>';
-            openConfirmationModal(record);
           });
         } else {
+          resetRegistrationForm();
           openConfirmationModal(record);
         }
+      });
 
-        // Reset form fields
+      function resetRegistrationForm() {
         registrationForm.reset();
         selectPlanUI('iran_500k');
         currentReceiptDataUrl = '';
         currentReceiptName = '';
         uploadPreviewState.classList.add('hidden');
         uploadEmptyState.classList.remove('hidden');
-      });
+      }
 
       function openConfirmationModal(rec) {
         modalSummaryBox.innerHTML =
